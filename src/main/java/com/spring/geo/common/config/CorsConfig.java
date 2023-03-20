@@ -1,4 +1,4 @@
-package com.spring.geo_be.common.config;
+package com.spring.geo.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

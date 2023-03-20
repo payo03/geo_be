@@ -1,4 +1,4 @@
-package com.spring.geo_be.task.model;
+package com.spring.geo.task.model;
 
 import lombok.Data;
 

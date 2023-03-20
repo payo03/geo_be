@@ -1,4 +1,4 @@
-package com.spring.geo_be.task.controller;
+package com.spring.geo.task.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,16 +8,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.geo_be.common.config.ApiOperation;
-import com.spring.geo_be.task.model.Sample;
+import com.spring.geo.common.config.ApiOperation;
+import com.spring.geo.common.exception.BusinessException;
+import com.spring.geo.task.model.Memberonline;
+import com.spring.geo.task.model.Sample;
+import com.spring.geo.task.service.MemberService;
+
+import jakarta.annotation.Resource;
 
 @RestController
 @RequestMapping("/samplevue")
 public class SampleController {
 
+    @Resource(name = "memberService")
+    private MemberService memberService;
+    
     @ApiOperation(httpMethod = "POST", notes = "sample link")
     @RequestMapping(method = RequestMethod.POST, path = "/samplelink")
-    public Map<String, String> sample(@RequestBody Sample sample) {
+    public Map<String, String> sample(@RequestBody Sample sample) throws BusinessException {
         System.out.println(sample);
 
         Map<String, String> result = new HashMap<String, String>();
@@ -25,6 +33,9 @@ public class SampleController {
         result.put("header", sample.getHeader());
         result.put("body", sample.getBody());
 
+        Memberonline memberonline = memberService.selectMember();
+        System.out.println(memberonline);
+        
         return result;
     }
     

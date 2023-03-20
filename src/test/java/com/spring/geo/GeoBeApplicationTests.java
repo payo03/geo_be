@@ -1,4 +1,4 @@
-package com.spring.geo_be;
+package com.spring.geo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
