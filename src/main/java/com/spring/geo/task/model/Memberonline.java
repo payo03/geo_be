@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Memberonline {
     
-    private int membeStatus;
+    private int memberStatus;
     private String memberStatusDescription;
 }

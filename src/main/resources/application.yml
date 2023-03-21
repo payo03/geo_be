@@ -1,12 +1,12 @@
 spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://compassionate_babbage:3306/geo_db?useSSL=false
+        url: jdbc:mysql://localhost:3306/geo_db?useSSL=false
         username: root
         password: 1234
 
 mybatis:
-    mapper-locations: classpath:sql/**/*.xml
+    mapper-locations: classpath:mapper/**/*.xml
     type-aliases-package: com.spring.geo.**.model
     configuration:
         map-underscore-to-camel-case: true

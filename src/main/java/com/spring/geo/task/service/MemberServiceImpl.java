@@ -1,5 +1,7 @@
 package com.spring.geo.task.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,10 @@ public class MemberServiceImpl implements MemberService {
     MemberRepository memberRepository;
     
     @Override
-    public Memberonline selectMember() throws BusinessException {
+    public List<Memberonline> selectMember() throws BusinessException {
         
-        Memberonline member = memberRepository.selectMember();
-        return member;
+        List<Memberonline> statusList = memberRepository.selectMember();
+        return statusList;
     }
     
 }

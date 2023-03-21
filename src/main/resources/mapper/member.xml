@@ -6,7 +6,9 @@
     <select id="selectMember" resultType="Memberonline">
     <![CDATA[
     /* mapperID:com.spring.geo.task.repository.MemberRepository.selectMember */
-        select *
+        select 
+            member_status, 
+            member_status_description
         from memberonline
     ]]>
     </select>

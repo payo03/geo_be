@@ -1,7 +1,10 @@
 package com.spring.geo.task.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +16,6 @@ import com.spring.geo.common.exception.BusinessException;
 import com.spring.geo.task.model.Memberonline;
 import com.spring.geo.task.model.Sample;
 import com.spring.geo.task.service.MemberService;
-
-import jakarta.annotation.Resource;
 
 @RestController
 @RequestMapping("/samplevue")
@@ -33,7 +34,7 @@ public class SampleController {
         result.put("header", sample.getHeader());
         result.put("body", sample.getBody());
 
-        Memberonline memberonline = memberService.selectMember();
+        List<Memberonline> memberonline = memberService.selectMember();
         System.out.println(memberonline);
         
         return result;
