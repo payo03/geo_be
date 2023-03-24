@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class Sample {
+public class LoginModel {
     
-    private String header;
-    private String body;
+    private String email;
+    private String password;
+    private boolean remember;
+
 }
