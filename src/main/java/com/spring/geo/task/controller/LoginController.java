@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.geo.common.config.ApiOperation;
 import com.spring.geo.common.util.CommonUtilService;
 import com.spring.geo.task.model.LoginModel;
@@ -29,7 +28,7 @@ public class LoginController {
     @ApiOperation(httpMethod = "POST", notes = "login")
     @RequestMapping(method = RequestMethod.POST, path = "/login")
     public Map<String, Object> login(@RequestBody Map<String, Object> map) throws Exception {
-        
+
         LoginModel loginModel = utilService.convertMapToModel(map, LoginModel.class);
         Map<String, Object> result = new HashMap<String, Object>();
 
