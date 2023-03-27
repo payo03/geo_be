@@ -51,12 +51,9 @@ public class CommonUtilService {
         for (Entry<String, String > header : headerMap.entrySet()) {
             headers.add(header.getKey(), header.getValue());
         }
-
         HttpEntity<T> httpEntity = new HttpEntity<>(param, headers);
 
-        restTemplate = new RestTemplate();
         ResponseEntity<HashMap> response = null;
-
         if (uriVariables != null) {
             response = restTemplate.exchange(url, method, httpEntity, HashMap.class, uriVariables);
         }
