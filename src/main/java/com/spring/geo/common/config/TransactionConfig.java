@@ -33,7 +33,7 @@ public class TransactionConfig {
     }
 
     @Bean 
-    @ConfigurationProperties(prefix = "spring.datasource.hikari")
+    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource datasource() {
         return DataSourceBuilder
             .create()

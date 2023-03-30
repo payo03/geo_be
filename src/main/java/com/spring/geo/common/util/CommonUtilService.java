@@ -23,6 +23,7 @@ public class CommonUtilService {
     @Qualifier("transferRestTemplate")
     private RestTemplate restTemplate;
     
+    @Deprecated
     public <T> T convertMapToModel(Map<String, Object> map, Class<T> type) throws Exception {
         if(type == null) throw new NullPointerException("Class can't be null");
         

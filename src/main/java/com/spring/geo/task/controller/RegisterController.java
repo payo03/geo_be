@@ -17,7 +17,7 @@ import com.spring.geo.task.model.Member;
 import com.spring.geo.task.service.MemberService;
 
 @RestController
-public class LoginController {
+public class RegisterController {
 
     @Autowired
     CommonUtilService utilService;
@@ -25,13 +25,12 @@ public class LoginController {
     @Resource(name = "memberService")
     private MemberService memberService;
 
-    @ApiOperation(httpMethod = "POST", notes = "login")
-    @RequestMapping(method = RequestMethod.POST, path = "/login")
-    public Map<String, Object> login(@RequestBody Member member) throws Exception {
-        Map<String, Object> result = new HashMap<String, Object>();
+    @ApiOperation(httpMethod = "POST", notes = "register")
+    @RequestMapping(method = RequestMethod.POST, path = "/register")
+    public Map<String, Object> registerMember(@RequestBody Member member) throws Exception {
+        memberService.registerMember(member);
 
-        result.put("memberId", member.getMemberId());
-        result.put("remember", member.isRemember());
+        Map<String, Object> result = new HashMap<String, Object>();
         
         return result;
     }

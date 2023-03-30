@@ -67,8 +67,9 @@ public class RestConfig {
 
     @Bean("transferRestTemplateBypass")
     public RestTemplate restTemplateByPass2()throws Exception {
+        LOGGER.debug("transferRestTemplateBypass");
         RestTemplate restTemplate = null;
-        LOGGER.debug("transferRestTemplateBypass2");
+
         try {
 
             TrustStrategy acceptingTrustStrategy = (cert, authType) -> true;
@@ -76,30 +77,22 @@ public class RestConfig {
                 .custom()
                 .loadTrustMaterial(null, acceptingTrustStrategy)
                 .build();
-            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
-                sslContext,
-                NoopHostnameVerifier.INSTANCE
-            );
 
+            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
             Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder
                 .<ConnectionSocketFactory> create()
                 .register("https", sslsf)
                 .register("http", new PlainConnectionSocketFactory())
                 .build();
 
-            BasicHttpClientConnectionManager connectionManager = new BasicHttpClientConnectionManager(
-                socketFactoryRegistry
-            );
-
+            BasicHttpClientConnectionManager connectionManager = new BasicHttpClientConnectionManager(socketFactoryRegistry);
             CloseableHttpClient httpClient = HttpClients
                 .custom()
                 .setSSLSocketFactory(sslsf)
                 .setConnectionManager(connectionManager)
                 .setMaxConnTotal(MAX_CONN_TOTAL)
                 .setMaxConnPerRoute(MAX_CONN_PER_ROUTE)
-                .setDefaultRequestConfig(
-                    RequestConfig.custom().setCookieSpec(CookieSpecs.STANDARD).build()
-                )
+                .setDefaultRequestConfig(RequestConfig.custom().setCookieSpec(CookieSpecs.STANDARD).build())
                 .build();
 
             HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
@@ -111,9 +104,7 @@ public class RestConfig {
             restTemplate = new RestTemplate(requestFactory);
         } catch (Exception e) {
             LOGGER.error(e);
-            throw new BusinessException(
-                "RestConfig.transferRestTemplateBypass Error Occurred"
-            );
+            throw new BusinessException("RestConfig.transferRestTemplateBypass Error Occurred");
         }
         return restTemplate;
     }

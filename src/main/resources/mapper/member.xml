@@ -13,4 +13,29 @@
     ]]>
     </select>
 
+    <select id="selectMemberList" resultType="Member">
+        <![CDATA[
+        /* mapperID:com.spring.geo.task.repository.MemberRepository.selectMemberList */
+            select *
+            from `member`
+        ]]>
+        </select>
+
+    <insert id="registerMember" parameterType="Member">
+    <![CDATA[
+    /* mapperID:com.spring.geo.task.repository.MemberRepository.selectMember */
+        insert into `member` (
+            member_id,
+            member_password,
+            member_name,
+            member_phone_number
+        ) values (
+            #{memberId},
+            #{memberPassword},
+            #{memberName},
+            #{memberPhoneNumber}
+        )
+    ]]>
+    </insert>
+
 </mapper>
