@@ -3,20 +3,33 @@
 
 <mapper namespace="com.spring.geo.task.repository.MemberRepository">
 
-    <select id="selectMember" resultType="Memberonline">
+    <select id="loginMember" parameterType="Member" resultType="Member">
     <![CDATA[
     /* mapperID:com.spring.geo.task.repository.MemberRepository.selectMember */
-        select 
-            member_status, 
-            member_status_description
-        from memberonline
+        select member_number,
+            member_id,
+            member_name,
+            member_phone_number,
+            member_registration_Date,
+            member_website
+            member_status,
+            member_image
+        from `member`
+        where member_id = #{memberId}
+            and member_password = #{memberPassword}
     ]]>
     </select>
 
     <select id="selectMemberList" resultType="Member">
         <![CDATA[
         /* mapperID:com.spring.geo.task.repository.MemberRepository.selectMemberList */
-            select *
+            select MEMBER_ID
+                ,MEMBER_NAME
+                ,MEMBER_PHONE_NUMBER
+                ,MEMBER_REGISTRATION_DATE
+                ,MEMBER_WEBSITE
+                ,MEMBER_LEVEL
+                ,MEMBER_IMAGE
             from `member`
         ]]>
         </select>

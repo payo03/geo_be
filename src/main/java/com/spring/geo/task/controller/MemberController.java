@@ -1,12 +1,9 @@
 package com.spring.geo.task.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +19,7 @@ public class MemberController {
     private MemberService memberService;
 
     @ApiOperation(httpMethod = "POST", notes = "memberList")
-    @RequestMapping(method = RequestMethod.POST, path = "/memberList")
+    @RequestMapping(method = RequestMethod.POST, path = "/vst/memberList")
     public List<Member> selectMemberList() throws Exception {
         List<Member> memberList = memberService.selectMemberList();
         

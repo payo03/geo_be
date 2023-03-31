@@ -26,7 +26,7 @@ public class RegisterController {
     private MemberService memberService;
 
     @ApiOperation(httpMethod = "POST", notes = "register")
-    @RequestMapping(method = RequestMethod.POST, path = "/register")
+    @RequestMapping(method = RequestMethod.POST, path = "/vst/register")
     public Map<String, Object> registerMember(@RequestBody Member member) throws Exception {
         memberService.registerMember(member);
 

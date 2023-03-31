@@ -12,3 +12,9 @@ mybatis:
         map-underscore-to-camel-case: true
         jdbc-type-for-null: 'NULL'
         call-setters-on-nulls: true
+
+jwt:
+    custom:
+        rest-token: s73012937
+        login-token: toyproject
+        activate: true

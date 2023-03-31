@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,13 +27,16 @@ public class LoginController {
     private MemberService memberService;
 
     @ApiOperation(httpMethod = "POST", notes = "login")
-    @RequestMapping(method = RequestMethod.POST, path = "/login")
-    public Map<String, Object> login(@RequestBody Member member) throws Exception {
+    @RequestMapping(method = RequestMethod.POST, path = "/rest/vst/login")
+    public Map<String, Object> loginMember(@RequestBody Member member, HttpServletResponse response) throws Exception {
         Map<String, Object> result = new HashMap<String, Object>();
 
-        result.put("memberId", member.getMemberId());
-        result.put("remember", member.isRemember());
+        String token = utilService.createToken(member.getMemberId(), (60 * 1000 * 60));
+        response.setHeader("loginauth", token);
         
+        Member resultMember = memberService.loginMember(member);
+        result.put("member", resultMember);
+
         return result;
     }
     

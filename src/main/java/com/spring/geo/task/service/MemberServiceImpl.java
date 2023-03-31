@@ -18,8 +18,8 @@ public class MemberServiceImpl implements MemberService {
     
     @Override
     public List<Memberonline> selectMember() throws BusinessException {
-        
         List<Memberonline> statusList = memberRepository.selectMember();
+
         return statusList;
     }
 
@@ -31,7 +31,18 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<Member> selectMemberList() throws BusinessException {
         List<Member> memberList = memberRepository.selectMemberList();
+
         return memberList;
+    }
+
+    @Override
+    public Member loginMember(Member member) throws BusinessException {
+        Member resultMember = memberRepository.loginMember(member);
+
+        if(resultMember == null) {
+            throw new BusinessException("login fail");
+        }
+        return resultMember;
     }
     
 }

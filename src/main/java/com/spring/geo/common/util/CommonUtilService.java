@@ -1,11 +1,17 @@
 package com.spring.geo.common.util;
 
+import java.security.Key;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,8 +22,16 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.geo.common.exception.BusinessException;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
 @Component
 public class CommonUtilService {
+
+    @Value("${jwt.custom.login-token}")
+    private String loginToken;
 
     @Autowired
     @Qualifier("transferRestTemplate")
@@ -68,6 +82,31 @@ public class CommonUtilService {
     public <T> HashMap<String, Object> exchangeCus(String url, HttpMethod method, T param, Map<String, String > headerMap) throws BusinessException {
 
         return this.exchangeCus(url, method, param, headerMap, null);
+    }
+    
+    public String createToken(String subject, long time) {
+        if (time <= 0) {
+            throw new RuntimeException("Expiry time must be greater than Zero : [" + time + "] ");
+        }
+        // 토큰을 서명하기 위해 사용해야할 알고리즘 선택
+        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+
+        byte[] secretKeyBytes = DatatypeConverter.parseBase64Binary(loginToken);
+        Key signingKey = new SecretKeySpec(secretKeyBytes, signatureAlgorithm.getJcaName());
+        JwtBuilder builder = Jwts.builder()
+                .setSubject(subject)
+                .signWith(signatureAlgorithm, signingKey);
+        long nowTime = System.currentTimeMillis();
+        builder.setExpiration(new Date(nowTime + time));
+
+        return builder.compact();
+    }
+
+    public String getSubject(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(DatatypeConverter.parseBase64Binary(loginToken))
+                .parseClaimsJws(token).getBody();
+        return claims.getSubject();
     }
 
 }
