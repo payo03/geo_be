@@ -31,7 +31,7 @@ public class LoginController {
     public Map<String, Object> loginMember(@RequestBody Member member, HttpServletResponse response) throws Exception {
         Map<String, Object> result = new HashMap<String, Object>();
 
-        String token = utilService.createToken(member.getMemberId(), (60 * 1000 * 60));
+        String token = utilService.createToken(member.getMemberId(), (60 * 1000 * 60)); // 1시간
         response.setHeader("loginauth", token);
         
         Member resultMember = memberService.loginMember(member);

@@ -84,6 +84,7 @@ public class CommonUtilService {
         return this.exchangeCus(url, method, param, headerMap, null);
     }
     
+    // 토큰 발급
     public String createToken(String subject, long time) {
         if (time <= 0) {
             throw new RuntimeException("Expiry time must be greater than Zero : [" + time + "] ");
@@ -102,6 +103,7 @@ public class CommonUtilService {
         return builder.compact();
     }
 
+    // 토큰 해독
     public String getSubject(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(loginToken))

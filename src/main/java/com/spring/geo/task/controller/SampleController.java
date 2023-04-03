@@ -16,7 +16,7 @@ import com.spring.geo.task.model.Sample;
 public class SampleController {
 
     @ApiOperation(httpMethod = "POST", notes = "sample call")
-    @RequestMapping(method = RequestMethod.POST, path = "/vst/samplecall")
+    @RequestMapping(method = RequestMethod.POST, path = "/rest/vst/samplecall")
     public Map<String, String> sample(@RequestBody Sample sample)throws BusinessException {
         Map<String, String> result = new HashMap<String, String>();
 
