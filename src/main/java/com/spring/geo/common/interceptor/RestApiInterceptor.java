@@ -27,7 +27,6 @@ public class RestApiInterceptor implements HandlerInterceptor {
         final String auth = request.getHeader("Authorization");
 
         if (activate) {
-            LOGGER.info(auth);
             if (auth != null && !auth.equals("")) {
                 if (auth.equals(restToken))
                     return true;

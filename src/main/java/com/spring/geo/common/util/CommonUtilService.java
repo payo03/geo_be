@@ -1,6 +1,7 @@
 package com.spring.geo.common.util;
 
 import java.security.Key;
+import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +37,8 @@ public class CommonUtilService {
     @Autowired
     @Qualifier("transferRestTemplate")
     private RestTemplate restTemplate;
+
+    private long tokenDuration = Duration.ofMinutes(2).toMillis();
     
     @Deprecated
     public <T> T convertMapToModel(Map<String, Object> map, Class<T> type) throws Exception {
@@ -85,10 +88,7 @@ public class CommonUtilService {
     }
     
     // 토큰 발급
-    public String createToken(String subject, long time) {
-        if (time <= 0) {
-            throw new RuntimeException("Expiry time must be greater than Zero : [" + time + "] ");
-        }
+    public String createToken(String subject) {
         // 토큰을 서명하기 위해 사용해야할 알고리즘 선택
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
@@ -98,7 +98,8 @@ public class CommonUtilService {
                 .setSubject(subject)
                 .signWith(signatureAlgorithm, signingKey);
         long nowTime = System.currentTimeMillis();
-        builder.setExpiration(new Date(nowTime + time));
+        // 유효기간 30분
+        builder.setExpiration(new Date(nowTime + tokenDuration));
 
         return builder.compact();
     }
