@@ -72,12 +72,11 @@ public class CommonUtilService {
         HttpEntity<T> httpEntity = new HttpEntity<>(param, headers);
 
         ResponseEntity<HashMap> response = null;
-        if (uriVariables != null) {
+
+        if (uriVariables != null) 
             response = restTemplate.exchange(url, method, httpEntity, HashMap.class, uriVariables);
-        }
-        else {
+        else 
             response = restTemplate.exchange(url, method, httpEntity, HashMap.class);
-        }
 
         return response != null ? response.getBody(): null;
     }
