@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,11 +20,16 @@ public class MemberController {
     private MemberService memberService;
 
     @ApiOperation(httpMethod = "POST", notes = "memberList")
-    @RequestMapping(method = RequestMethod.POST, path = "/vst/memberList")
+    @RequestMapping(method = RequestMethod.POST, path = "/rest/vst/memberList")
     public List<Member> selectMemberList() throws Exception {
         List<Member> memberList = memberService.selectMemberList();
         
         return memberList;
     }
     
+    @ApiOperation(httpMethod = "POST", notes = "updateStatus")
+    @RequestMapping(method = RequestMethod.POST, path = "/rest/auth/updatestatus")
+    public void updateStatus(@RequestBody Member member) throws Exception {
+        memberService.updateStatus(member);
+    }
 }

@@ -61,13 +61,13 @@ public class TransactionConfig {
         txAttrBatchReadOnly.setTimeout(TX_METHOD_BATCH_TIMEOUT);
         
         NameMatchTransactionAttributeSource source = new NameMatchTransactionAttributeSource();
-        // 30초 타임아웃으로 제한적 허용(온라인 업무처리)
+        // 30초 타임아웃으로 제한적 허용 (온라인 업무처리)
         source.addTransactionalMethod("delete*", txAttrRequired);
         source.addTransactionalMethod("update*", txAttrRequired);
         source.addTransactionalMethod("insert*", txAttrRequired);
         source.addTransactionalMethod("select*", txAttrReadOnly);
 
-        //배치 처리용 개발자 사용대상 (온라인 업무 사용 금지)
+        // 배치 처리용 
         source.addTransactionalMethod("batchInsert*", txAttrBatchRequired);
         source.addTransactionalMethod("batchDelete*", txAttrBatchRequired);
         source.addTransactionalMethod("batchUpdate*", txAttrBatchRequired);

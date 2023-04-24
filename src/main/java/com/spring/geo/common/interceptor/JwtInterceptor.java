@@ -1,15 +1,20 @@
 package com.spring.geo.common.interceptor;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.geo.common.exception.BusinessException;
 
 import io.jsonwebtoken.Claims;
@@ -28,11 +33,18 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        final String auth = request.getHeader("loginAuth");
+        String headerAuth = request.getHeader("loginAuth");
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = mapper.readValue(headerAuth, Map.class);
+
+        String authToken = (String) map.get("value");
+        Long expiration = (Long) map.get("expiration");
 
         if(activate) {
-            LOGGER.info(auth);
-            if (auth != null && !auth.equals("") && isUsable(loginToken)) {
+            LOGGER.info(map);
+            if (map.size() != 0 && isUsable(authToken)) {
+                response.setHeader("loginauth", authToken);
+                
                 return true;
             } else {
                 throw new BusinessException("loginAuth check");

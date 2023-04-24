@@ -5,7 +5,7 @@
 
     <select id="loginMember" parameterType="Member" resultType="Member">
     <![CDATA[
-    /* mapperID:com.spring.geo.task.repository.MemberRepository.selectMember */
+    /* mapperID:com.spring.geo.task.repository.MemberRepository.loginMember */
         select member_number,
             member_id,
             member_name,
@@ -21,22 +21,32 @@
     </select>
 
     <select id="selectMemberList" resultType="Member">
-        <![CDATA[
-        /* mapperID:com.spring.geo.task.repository.MemberRepository.selectMemberList */
-            select MEMBER_ID
-                ,MEMBER_NAME
-                ,MEMBER_PHONE_NUMBER
-                ,MEMBER_REGISTRATION_DATE
-                ,MEMBER_WEBSITE
-                ,MEMBER_LEVEL
-                ,MEMBER_IMAGE
-            from `member`
-        ]]>
-        </select>
+    <![CDATA[
+    /* mapperID:com.spring.geo.task.repository.MemberRepository.selectMemberList */
+        select MEMBER_NUMBER
+            ,MEMBER_ID
+            ,MEMBER_NAME
+            ,MEMBER_PHONE_NUMBER
+            ,MEMBER_REGISTRATION_DATE
+            ,MEMBER_WEBSITE
+            ,MEMBER_LEVEL
+            ,MEMBER_IMAGE
+        from `member`
+    ]]>
+    </select>
+
+    <update id="updateStatus" parameterType="Member">
+    <![CDATA[
+    /* mapperID:com.spring.geo.task.repository.MemberRepository.updateStatus */
+        update `member` 
+        set MEMBER_STATUS = #{memberStatus}
+        where MEMBER_NUMBER = #{memberNumber}
+    ]]>
+    </update>
 
     <insert id="registerMember" parameterType="Member">
     <![CDATA[
-    /* mapperID:com.spring.geo.task.repository.MemberRepository.selectMember */
+    /* mapperID:com.spring.geo.task.repository.MemberRepository.registerMember */
         insert into `member` (
             member_id,
             member_password,

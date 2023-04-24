@@ -24,8 +24,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void registerMember(Member member) throws BusinessException {
-        memberRepository.registerMember(member);
+    public int registerMember(Member member) throws BusinessException {
+        int result = memberRepository.registerMember(member);
+
+        return result;
     }
 
     @Override
@@ -41,8 +43,20 @@ public class MemberServiceImpl implements MemberService {
 
         if(resultMember == null) {
             throw new BusinessException("login fail");
+        } else {
+            
+            resultMember.setMemberStatus(1);
+            this.updateStatus(resultMember);
         }
+
         return resultMember;
+    }
+
+    @Override
+    public int updateStatus(Member member) throws BusinessException {
+        int result = memberRepository.updateStatus(member);
+
+        return result;
     }
     
 }

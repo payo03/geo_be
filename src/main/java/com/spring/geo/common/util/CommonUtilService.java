@@ -38,7 +38,7 @@ public class CommonUtilService {
     @Qualifier("transferRestTemplate")
     private RestTemplate restTemplate;
 
-    private long tokenDuration = Duration.ofMinutes(2).toMillis();
+    private long tokenDuration = Duration.ofMinutes(30).toMillis();
     
     @Deprecated
     public <T> T convertMapToModel(Map<String, Object> map, Class<T> type) throws Exception {
