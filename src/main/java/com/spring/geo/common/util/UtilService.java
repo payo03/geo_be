@@ -29,7 +29,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
-public class CommonUtilService {
+public class UtilService {
 
     @Value("${jwt.custom.login-token}")
     private String loginToken;

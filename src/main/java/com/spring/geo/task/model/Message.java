@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class Memberonline {
+public class Message {
     
-    private int memberStatus;
-    private String memberStatusDescription;
+    private int fromMemberNumber;
+    private int toMemberNumber;
+    private String content;
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.geo.common.config.ApiOperation;
-import com.spring.geo.common.util.CommonUtilService;
+import com.spring.geo.common.util.UtilService;
 import com.spring.geo.task.model.Member;
 import com.spring.geo.task.service.MemberService;
 
@@ -20,7 +20,7 @@ import com.spring.geo.task.service.MemberService;
 public class RegisterController {
 
     @Autowired
-    CommonUtilService utilService;
+    UtilService utilService;
 
     @Resource(name = "memberService")
     private MemberService memberService;

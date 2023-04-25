@@ -3,8 +3,6 @@ package com.spring.geo.common.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,8 +17,6 @@ public class RestApiInterceptor implements HandlerInterceptor {
 
     @Value("${jwt.custom.activate}")
     private boolean activate;
-
-    private static final Logger LOGGER = LogManager.getLogger(RestApiInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

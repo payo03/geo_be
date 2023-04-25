@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.spring.geo.common.exception.BusinessException;
 import com.spring.geo.task.model.Member;
-import com.spring.geo.task.model.Memberonline;
 import com.spring.geo.task.repository.MemberRepository;
 
 @Service("memberService")
@@ -16,13 +15,6 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     MemberRepository memberRepository;
     
-    @Override
-    public List<Memberonline> selectMember() throws BusinessException {
-        List<Memberonline> statusList = memberRepository.selectMember();
-
-        return statusList;
-    }
-
     @Override
     public int registerMember(Member member) throws BusinessException {
         int result = memberRepository.registerMember(member);
