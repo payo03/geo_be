@@ -14,4 +14,6 @@ public class Message {
     private int fromMemberNumber;
     private int toMemberNumber;
     private String content;
+    private String memberName;
+    private int memberImage;
 }

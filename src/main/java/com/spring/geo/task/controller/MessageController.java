@@ -1,5 +1,8 @@
 package com.spring.geo.task.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +25,9 @@ public class MessageController {
 
     @MessageMapping("/receive")
     @SendTo("/send")
-    public Message messageHandler(Message message) {
-        Message result = messageService.messageHandler(message);
+    public List<Message> messageHandler(Message message) {
+        List<Message> result = messageService.messageHandler(message);
 
         return result;
     }
-
 }
