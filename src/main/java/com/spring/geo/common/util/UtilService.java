@@ -12,7 +12,6 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -30,9 +29,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class UtilService {
-
-    @Value("${jwt.custom.login-token}")
-    private String loginToken;
 
     @Autowired
     @Qualifier("transferRestTemplate")
@@ -87,11 +83,11 @@ public class UtilService {
     }
     
     // 토큰 발급
-    public String createToken(String subject) {
+    public String createToken(String subject, String envToken) {
         // 토큰을 서명하기 위해 사용해야할 알고리즘 선택
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
-        byte[] secretKeyBytes = DatatypeConverter.parseBase64Binary(loginToken);
+        byte[] secretKeyBytes = DatatypeConverter.parseBase64Binary(envToken);
         Key signingKey = new SecretKeySpec(secretKeyBytes, signatureAlgorithm.getJcaName());
         JwtBuilder builder = Jwts.builder()
                 .setSubject(subject)
@@ -104,11 +100,22 @@ public class UtilService {
     }
 
     // 토큰 해독
-    public String getSubject(String token) {
+    public String getSubject(String token, String envToken) {
         Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(loginToken))
+                .setSigningKey(DatatypeConverter.parseBase64Binary(envToken))
                 .parseClaimsJws(token).getBody();
         return claims.getSubject();
     }
 
+    // 토큰 유효성 검사
+    public boolean isUsable(String jwt, String envToken) throws Exception {
+        try {
+            Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(envToken))
+                .parseClaimsJws(jwt).getBody();
+
+            return true;
+        } catch (Exception e) {
+            throw new Exception();
+        }
+    }
 }

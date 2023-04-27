@@ -17,7 +17,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> messageHandler(Message message) throws BusinessException {
-        messageRepository.sendMessage(message);
+        if (message.getContent() != null) messageRepository.sendMessage(message);
 
         List<Message> messageList = messageRepository.selectMessageList(message);
         return messageList;

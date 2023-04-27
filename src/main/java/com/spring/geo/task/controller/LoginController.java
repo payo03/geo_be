@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,9 @@ import com.spring.geo.task.service.MemberService;
 
 @RestController
 public class LoginController {
+    
+    @Value("${jwt.custom.login-token}")
+    private String loginToken;
 
     @Autowired
     UtilService utilService;
@@ -30,8 +34,7 @@ public class LoginController {
     @ApiOperation(httpMethod = "POST", notes = "login")
     @RequestMapping(method = RequestMethod.POST, path = "/rest/vst/login")
     public Member loginMember(@RequestBody Member param, HttpServletResponse response) throws Exception {
-        String token = utilService.createToken(param.getMemberId()); // 30분
-        response.setHeader("loginauth", token);
+        response.setHeader("loginauth", utilService.createToken(param.getMemberId(), loginToken));
         
         Member result = memberService.loginMember(param);
         return result;

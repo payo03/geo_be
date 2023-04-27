@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.spring.geo.common.exception.BusinessException;
-import com.spring.geo.task.model.Member;
 import com.spring.geo.task.model.Message;
 
 @Mapper
@@ -15,6 +14,5 @@ public interface MessageRepository {
 
     int sendMessage(Message message) throws BusinessException;
     List<Message> selectMessageList(Message message) throws BusinessException;
-    List<Member> selectMemberListSort(int fromMemberNumber) throws BusinessException;;
 
 }
