@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.geo.common.exception.BusinessException;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -34,7 +35,7 @@ public class UtilService {
     @Qualifier("transferRestTemplate")
     private RestTemplate restTemplate;
 
-    private long tokenDuration = Duration.ofMinutes(30).toMillis();
+    private long defaultTime = Duration.ofMinutes(1).toMillis();
     
     @Deprecated
     public <T> T convertMapToModel(Map<String, Object> map, Class<T> type) throws Exception {
@@ -84,6 +85,10 @@ public class UtilService {
     
     // 토큰 발급
     public String createToken(String subject, String envToken) {
+        return createToken(subject, envToken, defaultTime);
+    }
+
+    public String createToken(String subject, String envToken, Long tokenDuration) {
         // 토큰을 서명하기 위해 사용해야할 알고리즘 선택
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
@@ -100,22 +105,15 @@ public class UtilService {
     }
 
     // 토큰 해독
-    public String getSubject(String token, String envToken) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(envToken))
-                .parseClaimsJws(token).getBody();
-        return claims.getSubject();
-    }
-
-    // 토큰 유효성 검사
-    public boolean isUsable(String jwt, String envToken) throws Exception {
+    public String getSubject(String token, String envToken) throws ExpiredJwtException {
         try {
             Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(envToken))
-                .parseClaimsJws(jwt).getBody();
+                    .parseClaimsJws(token).getBody();
 
-            return true;
-        } catch (Exception e) {
-            throw new Exception();
+            return claims.getSubject();
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredJwtException(null, null, e.getMessage());
         }
+
     }
 }

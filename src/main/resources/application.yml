@@ -15,6 +15,5 @@ mybatis:
 
 jwt:
     custom:
-        rest-token: s73012937
-        login-token: toyproject
-        activate: true
+        access-token: toyproject
+        refresh-token: s73012937

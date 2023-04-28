@@ -1,5 +1,7 @@
 package com.spring.geo.task.controller;
 
+import java.time.Duration;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,8 +21,13 @@ import com.spring.geo.task.service.MemberService;
 @RestController
 public class LoginController {
     
-    @Value("${jwt.custom.login-token}")
-    private String loginToken;
+    private long time = Duration.ofMinutes(1).toMillis();
+
+    @Value("${jwt.custom.access-token}")
+    private String accessToken;
+
+    @Value("${jwt.custom.refresh-token}")
+    private String refreshToken;
 
     @Autowired
     UtilService utilService;
@@ -34,7 +41,8 @@ public class LoginController {
     @ApiOperation(httpMethod = "POST", notes = "login")
     @RequestMapping(method = RequestMethod.POST, path = "/rest/vst/login")
     public Member loginMember(@RequestBody Member param, HttpServletResponse response) throws Exception {
-        response.setHeader("loginauth", utilService.createToken(param.getMemberId(), loginToken));
+        response.setHeader("accesstoken", utilService.createToken(param.getMemberId(), accessToken));
+        response.setHeader("refreshtoken", utilService.createToken(param.getMemberId(), accessToken + refreshToken, time));
         
         Member result = memberService.loginMember(param);
         return result;
