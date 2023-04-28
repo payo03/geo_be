@@ -35,7 +35,7 @@ public class UtilService {
     @Qualifier("transferRestTemplate")
     private RestTemplate restTemplate;
 
-    private long defaultTime = Duration.ofMinutes(1).toMillis();
+    private long defaultTime = Duration.ofMinutes(5).toMillis();
     
     @Deprecated
     public <T> T convertMapToModel(Map<String, Object> map, Class<T> type) throws Exception {

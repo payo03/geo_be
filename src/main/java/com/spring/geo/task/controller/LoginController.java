@@ -21,7 +21,7 @@ import com.spring.geo.task.service.MemberService;
 @RestController
 public class LoginController {
     
-    private long time = Duration.ofMinutes(1).toMillis();
+    private long time = Duration.ofMinutes(30).toMillis();
 
     @Value("${jwt.custom.access-token}")
     private String accessToken;
